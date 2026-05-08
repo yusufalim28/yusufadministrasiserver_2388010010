@@ -113,7 +113,7 @@ h2 {
     text-align: center;
     position: relative;
     padding: 0 5%;
-    background: url('hero-bg.png') no-repeat center center/cover;
+    background: url('utama.jpg') no-repeat center center/cover;
 }
 
 .hero::before {
@@ -214,9 +214,189 @@ h2 {
     background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), transparent);
 }
 
+/* Skills Section */
+.skills-section, .projects-section {
+    padding: 10rem 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-header {
+    margin-bottom: 5rem;
+    text-align: center;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 1rem;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem;
+}
+
+.skill-item {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 2.5rem;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.skill-item:hover {
+    border-color: var(--accent-purple);
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.skill-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+    border-radius: 10px;
+    position: relative;
+    transition: 1.5s ease-out;
+}
+
+/* Projects Section */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 3rem;
+}
+
+.project-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    overflow: hidden;
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+.project-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 20px 40px rgba(0, 210, 255, 0.1);
+}
+
+.project-img {
+    height: 300px;
+    background: #111;
+    position: relative;
+}
+
+.placeholder {
+    background: linear-gradient(135deg, #111, #222);
+}
+
+.placeholder::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, var(--accent-pink) 0%, transparent 70%);
+    opacity: 0.1;
+}
+
+.purple-glow::after {
+    background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+}
+
+.pink-glow::after {
+    background: radial-gradient(circle, var(--accent-pink) 0%, transparent 70%);
+}
+
+.project-info {
+    padding: 2.5rem;
+}
+
+.project-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.project-info p {
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 1.5rem;
+}
+
+.tag {
+    padding: 0.4rem 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Experience Section */
+.experience-section {
+    padding: 10rem 5%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+    border-left: 1px solid var(--glass-border);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 4rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.35rem;
+    top: 0.5rem;
+    width: 10px;
+    height: 10px;
+    background: var(--accent-purple);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--accent-purple);
+}
+
+.time {
+    font-size: 0.9rem;
+    color: var(--accent-cyan);
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-item p {
+    color: rgba(255, 255, 255, 0.6);
+}
+
 /* Stats Section */
 .stats-section {
-    padding: 5rem 5%;
+    padding: 8rem 5%;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
