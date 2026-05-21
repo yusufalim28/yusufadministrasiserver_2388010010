@@ -26,7 +26,7 @@ services:
       DB_NAME: dbcompro_2388010010
       DB_HOST: db-webdinamis
       NEXTAUTH_SECRET : ini-kdkdkdkdkdkkd-hdhdhdhdhdhdh-
-      NEXTAUTH_URL : http://3.0.177.71
+      NEXTAUTH_URL : http://13.212.137.48/3000
     depends_on:
       - db-webdinamis
  
