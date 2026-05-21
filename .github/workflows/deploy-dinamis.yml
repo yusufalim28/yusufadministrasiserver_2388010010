@@ -1,0 +1,72 @@
+name: Deploy Web Dinamis to AWS EC2
+
+on:
+  push:
+    branches: [ main ]
+    paths: 
+      - 'web-dinamis/**'
+      - '.github/workflows/deploy-dinamis.yml'
+  
+jobs:
+  build-and-deploy-web-dinamis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: build and push Docker image
+        uses: docker/build-push-action@v5.3.0
+        with:
+          context: ./web-dinamis
+          file: ./web-dinamis/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-dinamis_2388010010:latest
+      
+  deploy-to-ec2:
+    runs-on: ubuntu-latest
+    needs: build-and-deploy-web-dinamis
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2 via SSH and run docker compose
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USERNAME }} # <- Sudah disamakan
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          port: 22
+          script: |
+            docker rm -f /home/ubuntu/container-dinamis/database || true
+            docker rm -f /home/ubuntu/container-dinamis/web-dinamis || true
+
+      - name: Copy Compose file EC2 via SCP 
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USERNAME }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          port: 22
+          # Ditulis dalam satu baris menggunakan tanda koma tanpa spasi setelah koma
+          source: "web-dinamis/docker-compose.yml,web-dinamis/db_data/dbcompro_2388010010.sql"
+          target: "/home/ubuntu/container-dinamis"
+
+      - name: Deploy Web Dinamis via SSH and run docker compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USERNAME }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          port: 22
+          script: |
+            # Masuk ke dalam sub-folder tempat docker-compose.yml Anda mendarat
+            cd /home/ubuntu/container-dinamis/web-dinamis
+            export DOCKERHUB_USERNAME="${{ secrets.DOCKERHUB_USERNAME }}"
+            docker compose pull
+            docker compose up -d --remove-orphans
