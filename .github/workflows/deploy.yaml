@@ -19,7 +19,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: .
+        context: ./web-dinamis
+        file: ./web-dinamis/Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/yusufadministrasiserver_2388010010:latest
 
